@@ -1,0 +1,41 @@
+algo: grpo              # ppo | grpo
+
+policy:
+  checkpoint: "Qwen/Qwen2.5-7B-Instruct"
+  reference_checkpoint: "Qwen/Qwen2.5-7B-Instruct"   # used for KL penalty (ppo) / left null for grpo if unused
+  max_new_tokens: 512
+  temperature: 1.0
+
+mesh:
+  num_rollout_actors: 4
+  num_trainer_gpus: 2
+  rollout_gpu_type: L4
+  trainer_gpu_type: A100
+  weight_sync_every: 1        # sync rollout actors to latest weights every N trainer steps
+
+training:
+  steps: 1000
+  batch_size: 256
+  micro_batch_size: 32
+  lr: 1.0e-6
+  kl_coef: 0.05                # ppo: KL-to-reference penalty coefficient (ignored for grpo)
+  clip_range: 0.2              # ppo clip epsilon
+  group_size: 8                 # grpo: number of samples per prompt for group-relative baseline
+  gamma: 1.0                    # discount factor (ppo)
+  gae_lambda: 0.95              # GAE lambda (ppo)
+  grad_clip_norm: 1.0
+
+reward:
+  mode: builtin                 # builtin | external
+  external_endpoint: null       # e.g. "http://reward-actor.internal:8000/score"
+
+checkpointing:
+  save_every: 50
+  out_dir: "./checkpoints"
+  keep_last_n: 5
+
+logging:
+  project: "torchforge-rl"
+  run_name: null                # auto-generated if null
+  log_every: 1
+  log_dir: "./logs"

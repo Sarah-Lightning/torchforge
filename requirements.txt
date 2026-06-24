@@ -1,0 +1,9 @@
+torchforge
+torch>=2.3
+transformers>=4.42
+pyyaml
+numpy
+lightning
+litlogger
+tqdm
+requests
