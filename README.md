@@ -16,12 +16,12 @@ Unlike a batch job, these actors stay alive for the whole run. Rollout actors ke
 
 ## Key features
 
-- **ActorMesh topology, not a job queue** — rollout, reward, and trainer actors run concurrently; weight syncs and trajectory hand-offs happen over RPC, not via disk between stages.
-- **Async generation/training overlap** — no strict generate-then-train phases.
-- **PPO and GRPO out of the box** — switch the advantage estimator/loss in `config.yaml`; both share the same actor topology.
-- **Fault-tolerant by default** — a dropped rollout actor restarts and rejoins the mesh without restarting the trainer or losing the current checkpoint.
-- **Elastic rollout scaling** — `num_rollout_actors` scales generation throughput independently of trainer GPU count.
-- **Tracking built in** — reward curves, KL-to-reference, and per-actor throughput stream to one dashboard; checkpoints save on a fixed cadence as artifacts.
+- **ActorMesh topology, not a job queue** : rollout, reward, and trainer actors run concurrently; weight syncs and trajectory hand-offs happen over RPC, not via disk between stages.
+- **Async generation/training overlap** : no strict generate-then-train phases.
+- **PPO and GRPO out of the box** : switch the advantage estimator/loss in `config.yaml`; both share the same actor topology.
+- **Fault-tolerant by default** : a dropped rollout actor restarts and rejoins the mesh without restarting the trainer or losing the current checkpoint.
+- **Elastic rollout scaling** : `num_rollout_actors` scales generation throughput independently of trainer GPU count.
+- **Tracking built in** : reward curves, KL-to-reference, and per-actor throughput stream to one dashboard; checkpoints save on a fixed cadence as artifacts.
 
 ## Repo structure
 
